@@ -1,0 +1,72 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZJClassTool"
+        xmlns:utils="clr-namespace:ZJClassTool.Utils"
+ x:Name="toolbar_win" x:Class="ZJClassTool.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="60" Opacity="1" AllowsTransparency="True" Background="Transparent" 
+        ShowInTaskbar="False"
+        WindowStyle="None" Loaded="toolbar_win_Loaded">
+
+    <Window.Resources>
+        <DataTemplate x:Key="ToolbarMenu">
+            <Button x:Name="toolbar_item"  Background="Transparent" BorderThickness="0" Cursor="Hand" Height="60" Click="toolbar_item_Click">
+                <Button.Content>
+                    <StackPanel Width="Auto" Background="Transparent">
+                        <Image HorizontalAlignment="Center" Width="44" Source="{Binding Pic}"/>
+                        <TextBlock HorizontalAlignment="Center" Text="{Binding Name}" Foreground="#3C525B"/>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </DataTemplate>
+
+    </Window.Resources>
+
+    <Grid  ClipToBounds="True" Background="Transparent">
+        <utils:ClippingBorder
+     BorderBrush="#eee" BorderThickness="1" CornerRadius="4" ClipToBounds="True" Background="White">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition/>
+
+                </Grid.RowDefinitions>
+
+                <Button x:Name="top_button" Background="#3c525b" BorderThickness="0"  Cursor="Hand" Height="Auto" Width="Auto" Click="top_button_Click" >
+                    <Button.Content>
+                        <StackPanel>
+                            <Image x:Name="topimage" HorizontalAlignment="Center" Width="21">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsRight}" Value="true">
+                                                <Setter Property="Source" Value="Images/ToolBar/toobar_0.png"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsRight}" Value="false">
+                                                <Setter Property="Source" Value="Images/ToolBar/toobar_8.png"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+
+
+                <ItemsControl 
+                    x:Name="toolbar"
+                    ItemsSource="{Binding menuList}"
+                    ItemTemplate="{StaticResource ToolbarMenu}"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    Grid.Row="1" Background="#f3f3f3" BorderThickness="0">
+                </ItemsControl>
+            </Grid>
+        </utils:ClippingBorder>
+
+    </Grid>
+</Window>
