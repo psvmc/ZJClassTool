@@ -63,9 +63,10 @@
     <Compile Include="ToolbarRight.xaml.cs">
       <DependentUpon>ToolbarRight.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\ClippingBorder.cs" />
+    <Compile Include="Views\ClippingBorder.cs" />
     <Compile Include="Utils\MyNotifyModel.cs" />
     <Compile Include="Utils\VTHelper.cs" />
+    <Compile Include="Views\MyListBox.cs" />
     <Page Include="Blackboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

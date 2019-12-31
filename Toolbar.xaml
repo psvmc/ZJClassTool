@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZJClassTool"
-        xmlns:utils="clr-namespace:ZJClassTool.Utils"
- x:Name="toolbar_win" x:Class="ZJClassTool.MainWindow"
+    xmlns:views="clr-namespace:ZJClassTool.Views"
+    x:Name="toolbar_win" x:Class="ZJClassTool.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="60" Opacity="1" AllowsTransparency="True" Background="Transparent" 
         ShowInTaskbar="False"
         WindowStyle="None" Loaded="toolbar_win_Loaded">
-
+   
     <Window.Resources>
         <DataTemplate x:Key="ToolbarMenu">
             <Button x:Name="toolbar_item"  Background="Transparent" BorderThickness="0" Cursor="Hand" Height="60" Click="toolbar_item_Click">
@@ -22,12 +22,15 @@
                 </Button.Content>
             </Button>
         </DataTemplate>
-
     </Window.Resources>
 
     <Grid  ClipToBounds="True" Background="Transparent">
-        <utils:ClippingBorder
-     BorderBrush="#eee" BorderThickness="1" CornerRadius="4" ClipToBounds="True" Background="White">
+        <views:ClippingBorder
+            BorderBrush="#eee" 
+            BorderThickness="1" 
+            CornerRadius="4" 
+            ClipToBounds="True" 
+            Background="White">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
@@ -56,9 +59,8 @@
                     </Button.Content>
                 </Button>
 
-
                 <ItemsControl 
-                    x:Name="toolbar"
+                    x:Name="toolbar_list"
                     ItemsSource="{Binding menuList}"
                     ItemTemplate="{StaticResource ToolbarMenu}"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
@@ -66,7 +68,7 @@
                     Grid.Row="1" Background="#f3f3f3" BorderThickness="0">
                 </ItemsControl>
             </Grid>
-        </utils:ClippingBorder>
+        </views:ClippingBorder>
 
     </Grid>
 </Window>

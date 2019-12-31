@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
 
-namespace ZJClassTool.Utils
+namespace ZJClassTool.Views
 {
     public class ClippingBorder : Border
     {
@@ -24,17 +24,17 @@ namespace ZJClassTool.Utils
             }
             set
             {
-                if (this.Child != value)
+                if (Child != value)
                 {
-                    if (this.Child != null)
+                    if (Child != null)
                     {
                         // Restore original clipping
-                        this.Child.SetValue(UIElement.ClipProperty, _oldClip);
+                        Child.SetValue(ClipProperty, _oldClip);
                     }
 
                     if (value != null)
                     {
-                        _oldClip = value.ReadLocalValue(UIElement.ClipProperty);
+                        _oldClip = value.ReadLocalValue(ClipProperty);
                     }
                     else
                     {
@@ -49,21 +49,21 @@ namespace ZJClassTool.Utils
 
         protected virtual void OnApplyChildClip()
         {
-            UIElement child = this.Child;
+            UIElement child = Child;
             if (child != null)
             {
-                var top = Math.Max(this.CornerRadius.TopLeft, this.CornerRadius.TopRight);
-                var bottom = Math.Max(this.CornerRadius.BottomLeft, this.CornerRadius.BottomRight);
-                var max = Math.Max(top,bottom);
-                var size = this.RenderSize;
-                var width = size.Width - (this.BorderThickness.Left + this.BorderThickness.Right);
-                var height = size.Height - (this.BorderThickness.Top + this.BorderThickness.Bottom);
+                var top = Math.Max(CornerRadius.TopLeft, CornerRadius.TopRight);
+                var bottom = Math.Max(CornerRadius.BottomLeft, CornerRadius.BottomRight);
+                var max = Math.Max(top, bottom);
+                var size = RenderSize;
+                var width = size.Width - (BorderThickness.Left + BorderThickness.Right);
+                var height = size.Height - (BorderThickness.Top + BorderThickness.Bottom);
                 Geometry result = new RectangleGeometry
             (new Rect(0, 0, width, height), max, max);
                 double halfWidth = width / 2;
                 double halfHeight = height / 2;
 
-                if (this.CornerRadius.TopLeft == 0)
+                if (CornerRadius.TopLeft == 0)
                 {
                     result = new CombinedGeometry(
                         GeometryCombineMode.Union,
@@ -72,32 +72,24 @@ namespace ZJClassTool.Utils
                     );
                 }
 
-                if (this.CornerRadius.TopRight == 0)
+                if (CornerRadius.TopRight == 0)
                 {
                     result = new CombinedGeometry(GeometryCombineMode.Union, result, new RectangleGeometry
                 (new Rect(halfWidth, 0, halfWidth, halfHeight)));
                 }
 
-                if (this.CornerRadius.BottomLeft == 0)
+                if (CornerRadius.BottomLeft == 0)
                 {
                     result = new CombinedGeometry
                   (GeometryCombineMode.Union, result, new RectangleGeometry
                   (new Rect(0, halfHeight, halfWidth, halfHeight)));
                 }
-                if (this.CornerRadius.BottomRight == 0)
+                if (CornerRadius.BottomRight == 0)
                 {
                     result = new CombinedGeometry
                   (GeometryCombineMode.Union, result, new RectangleGeometry
                   (new Rect(halfWidth, halfHeight, halfWidth, halfHeight)));
                 }
-
-
-                //_clipRect.RadiusX = _clipRect.RadiusY = Math.Max(0.0, this.CornerRadius.TopLeft - (this.BorderThickness.Left * 0.5));
-
-                //Rect rect = new Rect(this.RenderSize);
-                //rect.Height -= (this.BorderThickness.Top + this.BorderThickness.Bottom);
-                //rect.Width -= (this.BorderThickness.Left + this.BorderThickness.Right);
-                //_clipRect.Rect = rect;
                 child.Clip = result;
             }
         }

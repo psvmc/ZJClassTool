@@ -94,7 +94,6 @@ namespace ZJClassTool
             });
             DataContext = pageData;
         }
-
         public void left_bar_click()
         {
             pageData.IsRight = false;
@@ -140,7 +139,7 @@ namespace ZJClassTool
         private void toolbar_item_Click(object sender, RoutedEventArgs e)
         {
             var clickindex = 0;
-            var buttons = VTHelper.FindChilds<Button>(toolbar, "toolbar_item");
+            var buttons = VTHelper.FindChilds<Button>(toolbar_list, "toolbar_item");
             for (var i = 0; i < buttons.Count; i++)
             {
                 if (buttons[i] == sender)
@@ -187,7 +186,7 @@ namespace ZJClassTool
                 leftBar.Show();
                 rightBar.Show();
             }
-            
+
         }
     }
 

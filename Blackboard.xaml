@@ -7,10 +7,8 @@
         mc:Ignorable="d"
         Title="Blackboard"  Opacity="1" AllowsTransparency="True" ShowInTaskbar="False" Background="Transparent" WindowStyle="None">
     <Grid Background="#043a25">
-
-        <Canvas></Canvas>
-        <Button x:Name="close_button" Click="close_button_Click" Width="100" Height="100"> close </Button>
-        
-
+        <Canvas x:Name="blackboard_canvas"></Canvas>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="100" Foreground="White" Background="#FF252525" Click="close_button_Click"> 关闭 </Button>
+        <TextBox x:Name="textbox" Height="200" VerticalAlignment="Bottom"></TextBox>
     </Grid>
 </Window>

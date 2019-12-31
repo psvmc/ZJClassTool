@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ZJClassTool.Utils;
 
 namespace ZJClassTool
 {
@@ -22,6 +23,30 @@ namespace ZJClassTool
         public Blackboard()
         {
             InitializeComponent();
+            this.blackboard_canvas.MouseDown += new MouseButtonEventHandler(aBtn_Click);
+            this.blackboard_canvas.MouseMove += new MouseEventHandler(aBtn_Click);
+            drawpath();
+        }
+
+        private void aBtn_Click(object sender, MouseEventArgs e)
+        {
+            textbox.Text = "fsdfsd";
+        }
+        private void drawpath()
+        {
+            Polyline curvePolyline = new Polyline();
+
+            curvePolyline.Stroke = Brushes.Green;
+            curvePolyline.StrokeThickness = 2;
+
+            var Points = new PointCollection();
+            Points.Add(new Point(0, 0));
+            Points.Add(new Point(100, 0));
+            Points.Add(new Point(100, 100));
+            Points.Add(new Point(200, 200));
+
+            curvePolyline.Points = Points;
+            this.blackboard_canvas.Children.Add(curvePolyline);
         }
 
         private void close_button_Click(object sender, RoutedEventArgs e)
