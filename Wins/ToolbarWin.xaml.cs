@@ -16,20 +16,20 @@ using ZJClassTool.Utils;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace ZJClassTool
+namespace ZJClassTool.Wins
 {
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ToolbarWin : Window
     {
 
         double pwidth = SystemParameters.PrimaryScreenWidth;
         double pHeight = SystemParameters.PrimaryScreenHeight;
-        ToolbarLeft leftBar;
-        ToolbarRight rightBar;
+        ToolbarLeftWin leftBar;
+        ToolbarRightWin rightBar;
         ToolbarModel pageData = new ToolbarModel();
-        public MainWindow()
+        public ToolbarWin()
         {
             InitializeComponent();
             this.Topmost = true;
@@ -41,55 +41,55 @@ namespace ZJClassTool
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "下课",
-                Pic = "Images/ToolBar/toobar_1.png"
+                Pic = "../Images/ToolBar/toobar_1.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "课件",
-                Pic = "Images/ToolBar/toobar_2.png"
+                Pic = "../Images/ToolBar/toobar_2.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "黑板",
-                Pic = "Images/ToolBar/toobar_3.png"
+                Pic = "../Images/ToolBar/toobar_3.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "演板",
-                Pic = "Images/ToolBar/toolbar_13.png"
+                Pic = "../Images/ToolBar/toolbar_13.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "训练",
-                Pic = "Images/ToolBar/toobar_4.png"
+                Pic = "../Images/ToolBar/toobar_4.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "抢答",
-                Pic = "Images/ToolBar/toobar_5.png"
+                Pic = "../Images/ToolBar/toobar_5.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "点名",
-                Pic = "Images/ToolBar/toobar_6.png"
+                Pic = "../Images/ToolBar/toobar_6.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "息屏",
-                Pic = "Images/ToolBar/toobar_10.png"
+                Pic = "../Images/ToolBar/toobar_10.png"
 
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "开始直播",
-                Pic = "Images/ToolBar/toobar_12_1.png"
+                Pic = "../Images/ToolBar/toobar_12_1.png"
 
             });
             DataContext = pageData;
@@ -121,7 +121,7 @@ namespace ZJClassTool
 
         private void toolbar_win_Loaded(object sender, RoutedEventArgs e)
         {
-            leftBar = new ToolbarLeft();
+            leftBar = new ToolbarLeftWin();
             leftBar.Topmost = true;
             leftBar.Left = 0;
             leftBar.Top = (pHeight - 50 - 48) / 2;
@@ -129,7 +129,7 @@ namespace ZJClassTool
             leftBar.Show();
 
 
-            rightBar = new ToolbarRight();
+            rightBar = new ToolbarRightWin();
             rightBar.Topmost = true;
             rightBar.Left = pwidth - 30;
             rightBar.Top = (pHeight - 50 - 48) / 2;
@@ -155,9 +155,20 @@ namespace ZJClassTool
             }
             else if (clickindex == 2)
             {
-                var blockboard = new Blackboard();
+                var blockboard = new BlackboardWin();
                 blockboard.Topmost = true;
                 blockboard.Width = pwidth;
+                blockboard.Height = pHeight;
+                blockboard.Left = 0;
+                blockboard.Top = 0;
+                blockboard.ShowDialog();
+                blockboard.Owner = this;
+            }
+            else if (clickindex == 3)
+            {
+                var blockboard = new ZBlackboardWin();
+                blockboard.Topmost = true;
+                blockboard.Width = 400;
                 blockboard.Height = pHeight;
                 blockboard.Left = 0;
                 blockboard.Top = 0;

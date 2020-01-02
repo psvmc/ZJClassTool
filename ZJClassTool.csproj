@@ -54,24 +54,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Blackboard.xaml.cs">
-      <DependentUpon>Blackboard.xaml</DependentUpon>
+    <Compile Include="Utils\ZBlackboard.cs" />
+    <Compile Include="Wins\BlackboardWin.xaml.cs">
+      <DependentUpon>BlackboardWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolbarLeft.xaml.cs">
-      <DependentUpon>ToolbarLeft.xaml</DependentUpon>
+    <Compile Include="Wins\ToolbarLeftWin.xaml.cs">
+      <DependentUpon>ToolbarLeftWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ToolbarRight.xaml.cs">
-      <DependentUpon>ToolbarRight.xaml</DependentUpon>
+    <Compile Include="Wins\ToolbarRightWin.xaml.cs">
+      <DependentUpon>ToolbarRightWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ZJBlackboard.cs" />
     <Compile Include="Views\ClippingBorder.cs" />
     <Compile Include="Utils\MyNotifyModel.cs" />
     <Compile Include="Utils\VTHelper.cs" />
     <Compile Include="Views\MyListBox.cs" />
-    <Page Include="Blackboard.xaml">
+    <Compile Include="Wins\ZBlackboardWin.xaml.cs">
+      <DependentUpon>ZBlackboardWin.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Wins\BlackboardWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Toolbar.xaml">
+    <Page Include="Wins\ToolbarWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -79,15 +84,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Toolbar.xaml.cs">
-      <DependentUpon>Toolbar.xaml</DependentUpon>
+    <Compile Include="Wins\ToolbarWin.xaml.cs">
+      <DependentUpon>ToolbarWin.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ToolbarLeft.xaml">
+    <Page Include="Wins\ToolbarLeftWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ToolbarRight.xaml">
+    <Page Include="Wins\ToolbarRightWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wins\ZBlackboardWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,7 +127,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Blackboard\class_1s.png" />
+    <Resource Include="Images\Blackboard\class_1un.png" />
+    <Resource Include="Images\Blackboard\class_2s.png" />
+    <Resource Include="Images\Blackboard\class_2un.png" />
+    <Resource Include="Images\Blackboard\class_3s.png" />
+    <Resource Include="Images\Blackboard\class_3un.png" />
+    <Resource Include="Images\Blackboard\class_4s.png" />
+    <Resource Include="Images\Blackboard\class_4un.png" />
+    <Resource Include="Images\Blackboard\class_5s.png" />
+    <Resource Include="Images\Blackboard\class_5un.png" />
+    <Resource Include="Images\Blackboard\class_6un.png" />
+    <Resource Include="Images\Blackboard\class_p1.png" />
+    <Resource Include="Images\Blackboard\class_p2.png" />
+    <Resource Include="Images\Blackboard\class_p3.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\ToolBar\toobar_0.png" />
     <Resource Include="Images\ToolBar\toobar_1.png" />
@@ -138,6 +162,13 @@
     <Resource Include="Images\ToolBar\toolbar_13.png" />
     <Resource Include="Images\ToolBar\toolbar_left.png" />
     <Resource Include="Images\ToolBar\toolbar_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blackboard\erase.png" />
+    <Resource Include="Images\Blackboard\pen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Blackboard\class_7un.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

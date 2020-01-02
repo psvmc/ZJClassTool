@@ -12,22 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ZJClassTool
+namespace ZJClassTool.Wins
 {
     /// <summary>
-    /// ToolbarLeft.xaml 的交互逻辑
+    /// ToolbarRight.xaml 的交互逻辑
     /// </summary>
-    public partial class ToolbarLeft : Window
+    public partial class ToolbarRightWin : Window
     {
-        public ToolbarLeft()
+        public ToolbarRightWin()
         {
             InitializeComponent();
         }
 
-        private void leftbar_Click(object sender, RoutedEventArgs e)
+        private void bar_Click(object sender, RoutedEventArgs e)
         {
-            var toolbarWin = (MainWindow)this.Owner;
-            toolbarWin.left_bar_click();
+            var toolbarWin = (ToolbarWin)this.Owner;
+            toolbarWin.right_bar_click();
         }
     }
 }

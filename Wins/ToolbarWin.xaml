@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZJClassTool"
     xmlns:views="clr-namespace:ZJClassTool.Views"
-    x:Name="toolbar_win" x:Class="ZJClassTool.MainWindow"
+    x:Name="toolbar_win" x:Class="ZJClassTool.Wins.ToolbarWin"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="60" Opacity="1" AllowsTransparency="True" Background="Transparent" 
         ShowInTaskbar="False"
@@ -46,10 +46,10 @@
                                     <Style TargetType="Image">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding IsRight}" Value="true">
-                                                <Setter Property="Source" Value="Images/ToolBar/toobar_0.png"/>
+                                                <Setter Property="Source" Value="../Images/ToolBar/toobar_0.png"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsRight}" Value="false">
-                                                <Setter Property="Source" Value="Images/ToolBar/toobar_8.png"/>
+                                                <Setter Property="Source" Value="../Images/ToolBar/toobar_8.png"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

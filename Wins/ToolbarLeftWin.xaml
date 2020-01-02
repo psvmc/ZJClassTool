@@ -1,4 +1,4 @@
-﻿<Window x:Class="ZJClassTool.ToolbarRight"
+﻿<Window x:Class="ZJClassTool.Wins.ToolbarLeftWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,15 +7,14 @@
         xmlns:utils="clr-namespace:ZJClassTool.Utils"
         xmlns:views="clr-namespace:ZJClassTool.Views"
         mc:Ignorable="d"
-         Title="ToolbarLeft" Height="50" Width="30"  ShowInTaskbar="False" 
+        Title="ToolbarLeft" Height="50" Width="30"  ShowInTaskbar="False" 
         AllowsTransparency="True" Background="Transparent" WindowStyle="None">
     <Grid>
         <views:ClippingBorder
-           CornerRadius="4 0 0 4"
-           BorderBrush="#ddd" BorderThickness="1" ClipToBounds="True" Background="White">
+     BorderBrush="#ddd" BorderThickness="1" CornerRadius="0 4 4 0" ClipToBounds="True" Background="White">
 
-            <Button x:Name="bar" BorderThickness="0" Click="bar_Click" Background="Transparent">
-                <Image Source="/Images/Toolbar/toolbar_right.png" Width="8"></Image>
+            <Button x:Name="leftbar" BorderThickness="0" Click="leftbar_Click" Background="Transparent">
+                <Image Source="/Images/Toolbar/toolbar_left.png" Width="8"></Image>
             </Button>
         </views:ClippingBorder>
     </Grid>
