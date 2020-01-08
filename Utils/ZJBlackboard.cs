@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 
 namespace ZJClassTool.Utils
@@ -32,13 +33,10 @@ namespace ZJClassTool.Utils
     {
 
         Canvas m_canvas;
-        Image m_image;
+        Image m_erase_img;
         PenType type = PenType.Pen;
         int page = 0;
-        int erasesize = 64;
-
-        double width;
-        double height;
+        int erasesize = 32;
 
         TextBox m_textbox;
 
@@ -53,13 +51,13 @@ namespace ZJClassTool.Utils
         public ZJBlackboard(Canvas canvas, Image image, TextBox textbox)
         {
             this.m_canvas = canvas;
-            this.m_image = image;
+            this.m_erase_img = image;
             this.m_textbox = textbox;
-            this.width = canvas.Width;
-            this.height = canvas.Height;
+
             strokes_page_all.Add(new ZJBBPage());
             if (canvas != null)
             {
+                Canvas.SetZIndex(m_erase_img, int.MaxValue);
                 canvas.MouseLeftButtonDown += new MouseButtonEventHandler(m_mousedown);
                 canvas.MouseMove += new MouseEventHandler(mousemove);
                 canvas.MouseLeftButtonUp += new MouseButtonEventHandler(m_mouseup);
@@ -67,6 +65,17 @@ namespace ZJClassTool.Utils
                 canvas.TouchDown += new EventHandler<TouchEventArgs>(m_touchdown);
                 canvas.TouchMove += new EventHandler<TouchEventArgs>(m_touchmove);
                 canvas.TouchUp += new EventHandler<TouchEventArgs>(m_touchup);
+            }
+        }
+
+        private void setCursor() {
+            if (this.type == PenType.Pen)
+            {
+                m_canvas.Cursor = Cursors.Arrow;
+            }
+            else {
+                StreamResourceInfo sri = Application.GetResourceStream(new Uri(@"cur\erase.cur", UriKind.Relative));
+                m_canvas.Cursor = new Cursor(sri.Stream);
             }
         }
 
@@ -85,9 +94,18 @@ namespace ZJClassTool.Utils
 
                     if (!this.sketching)
                     {
+                        
                         Polyline curvePolyline = new Polyline();
-                        curvePolyline.Stroke = Brushes.White;
-                        curvePolyline.StrokeThickness = 2;
+                        if (this.type == PenType.Pen)
+                        {
+                            curvePolyline.Stroke = Brushes.White;
+                            curvePolyline.StrokeThickness = 2;
+                        }
+                        else {
+                            curvePolyline.Stroke = m_canvas.Background;
+                            curvePolyline.StrokeThickness = this.erasesize;
+                        }
+                        
                         curvePolyline.StrokeLineJoin = PenLineJoin.Round;
                         var Points = new PointCollection();
                         Points.Add(e.GetPosition(this.m_canvas));
@@ -104,6 +122,12 @@ namespace ZJClassTool.Utils
 
         private void mousemove(object sender, MouseEventArgs e)
         {
+            var point = e.GetPosition(this.m_canvas);
+            m_erase_img.SetValue(Canvas.LeftProperty, point.X);
+            m_erase_img.SetValue(Canvas.TopProperty, point.Y);
+            if (m_erase_img != null) {
+                
+            }
             if (!istouch)
             {
                 if (ismouse)
@@ -117,7 +141,8 @@ namespace ZJClassTool.Utils
                         if (strokes_page_all[this.page].polylines.Count > 0)
                         {
                             Polyline curvePolyline = strokes_page_all[this.page].polylines.Last();
-                            curvePolyline.Points.Add(e.GetPosition(this.m_canvas));
+                            
+                            curvePolyline.Points.Add(point);
                         }
                     }
                 }
@@ -202,12 +227,14 @@ namespace ZJClassTool.Utils
         // 笔
         public void change_pen() {
             this.type = PenType.Pen;
+            setCursor();
         }
 
         // 橡皮
         public void change_erase()
         {
             this.type = PenType.Erase;
+            setCursor();
         }
 
         // 撤销

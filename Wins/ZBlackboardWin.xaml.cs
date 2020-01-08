@@ -27,7 +27,7 @@ namespace ZJClassTool.Wins
         {
             InitializeComponent();
 
-            myblackboard = new ZBlackboard(this.blackboard_canvas, null, null);
+            myblackboard = new ZBlackboard(this.blackboard_canvas);
             this.initData();
         }
 
@@ -131,7 +131,7 @@ namespace ZJClassTool.Wins
         }
     }
 
-    public class ZBPageModel : MyNotifyModel
+    public class ZBPageModel : ZJNotifyModel
     {
         public ObservableCollection<ZBMenu> menuList { get; set; }
         bool _IsRight = true;
@@ -146,7 +146,7 @@ namespace ZJClassTool.Wins
         }
     }
 
-    public class ZBMenu : MyNotifyModel
+    public class ZBMenu : ZJNotifyModel
     {
         string _name;
         public string Name

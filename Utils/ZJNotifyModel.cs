@@ -2,7 +2,7 @@
 
 namespace ZJClassTool.Utils
 {
-    public class MyNotifyModel : INotifyPropertyChanged
+    public class ZJNotifyModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)

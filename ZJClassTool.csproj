@@ -34,8 +34,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\NAudio.1.9.0\lib\net35\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ClientEngine, Version=0.10.0.0, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
+      <HintPath>packages\SuperSocket.ClientEngine.Core.0.10.0\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -44,6 +55,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WebSocket4Net, Version=0.15.2.11, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
+      <HintPath>packages\WebSocket4Net.0.15.2\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -55,6 +69,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Utils\ZBlackboard.cs" />
+    <Compile Include="Utils\ZJAudioModel.cs" />
+    <Compile Include="Utils\ZJRtmpPush.cs" />
     <Compile Include="Wins\BlackboardWin.xaml.cs">
       <DependentUpon>BlackboardWin.xaml</DependentUpon>
     </Compile>
@@ -66,11 +82,14 @@
     </Compile>
     <Compile Include="Utils\ZJBlackboard.cs" />
     <Compile Include="Views\ClippingBorder.cs" />
-    <Compile Include="Utils\MyNotifyModel.cs" />
+    <Compile Include="Utils\ZJNotifyModel.cs" />
     <Compile Include="Utils\VTHelper.cs" />
     <Compile Include="Views\MyListBox.cs" />
     <Compile Include="Wins\ZBlackboardWin.xaml.cs">
       <DependentUpon>ZBlackboardWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wins\ZJRtmpWin.xaml.cs">
+      <DependentUpon>ZJRtmpWin.xaml</DependentUpon>
     </Compile>
     <Page Include="Wins\BlackboardWin.xaml">
       <SubType>Designer</SubType>
@@ -100,6 +119,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Wins\ZJRtmpWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -119,6 +142,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -170,5 +194,25 @@
   <ItemGroup>
     <Resource Include="Images\Blackboard\class_7un.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cur\erase.cur" />
+    <Resource Include="cur\pen.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ffmpeg\avcodec-58.dll" />
+    <Content Include="ffmpeg\avdevice-58.dll" />
+    <Content Include="ffmpeg\avfilter-7.dll" />
+    <Content Include="ffmpeg\avformat-58.dll" />
+    <Content Include="ffmpeg\avutil-56.dll" />
+    <Content Include="ffmpeg\ffmpeg.exe" />
+    <Content Include="ffmpeg\ffplay.exe" />
+    <Content Include="ffmpeg\ffprobe.exe" />
+    <Content Include="ffmpeg\postproc-55.dll" />
+    <Content Include="ffmpeg\swresample-3.dll" />
+    <Content Include="ffmpeg\swscale-5.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>xcopy /Y /i /e $(ProjectDir)\ffmpeg $(TargetDir)\ffmpeg</PreBuildEvent>
+  </PropertyGroup>
 </Project>

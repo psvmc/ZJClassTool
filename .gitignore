@@ -8,3 +8,5 @@ public/
 .vs
 bin
 obj
+ffmpeg/*
+packages

@@ -57,8 +57,11 @@
         </DataTemplate>
     </Window.Resources>
     <Grid Background="White">
-        <Canvas Background="#043a25" x:Name="blackboard_canvas"></Canvas>
-        
+
+        <Canvas Background="#043a25" x:Name="blackboard_canvas">
+            <Image x:Name="erase_img" Visibility="Hidden" Width="64" Source="../Images/Blackboard/erase.png"></Image>
+        </Canvas>
+
         <Views:ClippingBorder 
             VerticalAlignment="Bottom"
             HorizontalAlignment="Center"
@@ -78,8 +81,6 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-
         </Views:ClippingBorder>
-
     </Grid>
 </Window>

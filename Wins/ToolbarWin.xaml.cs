@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ZJClassTool.Utils;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
+using WebSocket4Net;
 
 namespace ZJClassTool.Wins
 {
@@ -93,6 +93,7 @@ namespace ZJClassTool.Wins
 
             });
             DataContext = pageData;
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
         }
         public void left_bar_click()
         {
@@ -168,24 +169,35 @@ namespace ZJClassTool.Wins
             {
                 var blockboard = new ZBlackboardWin();
                 blockboard.Topmost = true;
-                blockboard.Width = 400;
+                blockboard.Width = pwidth;
                 blockboard.Height = pHeight;
                 blockboard.Left = 0;
                 blockboard.Top = 0;
                 blockboard.ShowDialog();
                 blockboard.Owner = this;
             }
-            else if (clickindex == 8)
+            else if (clickindex == 7)
             {
-                if (item.Name == "结束直播")
+                if (item.Name == "熄屏")
                 {
 
-                    item.Name = "开始直播";
+                    item.Name = "恢复";
                 }
                 else
                 {
-                    item.Name = "结束直播";
+                    item.Name = "熄屏";
                 }
+            }
+            else if (clickindex == 8)
+            {
+
+
+                var rtmpWin = new ZJRtmpWin();
+                rtmpWin.Topmost = true;
+                rtmpWin.Width = 300;
+                rtmpWin.Height = 200;
+                rtmpWin.ShowDialog();
+                rtmpWin.Owner = this;
             }
         }
 
@@ -199,10 +211,51 @@ namespace ZJClassTool.Wins
             }
 
         }
+
+
+        // WebSocket
+        WebSocket websocket = null;
+        //websocket连接
+        private void connectWebsocket()
+        {
+            websocket = new WebSocket("");
+            websocket.Opened += websocket_Opened;
+            websocket.Closed += websocket_Closed;
+            websocket.MessageReceived += websocket_MessageReceived;
+            websocket.Open();
+        }
+        private void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            //接收服务端发来的消息
+            MessageReceivedEventArgs responseMsg = (MessageReceivedEventArgs)e;
+            string strMsg = responseMsg.Message;
+
+        }
+
+        private void websocket_Closed(object sender, EventArgs e)
+        {
+
+        }
+
+        private void websocket_Opened(object sender, EventArgs e)
+        {
+
+        }
+
+        private void sendmsg(string msg)
+        {
+            if (websocket.State == WebSocketState.Open)
+            {
+                websocket.Send(msg);
+            }
+
+        }
+
+
     }
 
 
-    public class ToolbarModel : MyNotifyModel
+    public class ToolbarModel : ZJNotifyModel
     {
         public ObservableCollection<ToolbarMenu> menuList { get; set; }
         bool _IsRight = true;
@@ -217,7 +270,7 @@ namespace ZJClassTool.Wins
         }
     }
 
-    public class ToolbarMenu : MyNotifyModel
+    public class ToolbarMenu : ZJNotifyModel
     {
         string _name;
         public string Name
