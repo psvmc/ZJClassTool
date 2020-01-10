@@ -7,15 +7,15 @@
         xmlns:utils="clr-namespace:ZJClassTool.Utils"
         xmlns:views="clr-namespace:ZJClassTool.Views"
         mc:Ignorable="d"
-        Title="ToolbarLeft" Height="50" Width="30"  ShowInTaskbar="False" 
+        Title="ToolbarLeft" Height="50" Width="30"  ShowInTaskbar="False"
         AllowsTransparency="True" Background="Transparent" WindowStyle="None">
     <Grid>
-        <views:ClippingBorder
+        <views:ZJClippingBorder
      BorderBrush="#ddd" BorderThickness="1" CornerRadius="0 4 4 0" ClipToBounds="True" Background="White">
 
             <Button x:Name="leftbar" BorderThickness="0" Click="leftbar_Click" Background="Transparent">
                 <Image Source="/Images/Toolbar/toolbar_left.png" Width="8"></Image>
             </Button>
-        </views:ClippingBorder>
+        </views:ZJClippingBorder>
     </Grid>
 </Window>

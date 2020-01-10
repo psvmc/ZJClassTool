@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Resources;
@@ -13,15 +10,17 @@ using System.Windows.Shapes;
 
 namespace ZJClassTool.Utils
 {
-    enum PenType : byte
+    internal enum PenType : byte
     {
         Pen = 1,
         Erase = 2
     };
-    class ZJBBPage
+
+    internal class ZJBBPage
     {
         public List<Polyline> polylines { get; set; }
         public List<Polyline> undoHistory { get; set; }
+
         public ZJBBPage()
         {
             polylines = new List<Polyline>();
@@ -31,23 +30,24 @@ namespace ZJClassTool.Utils
 
     public class ZJBlackboard
     {
+        private Canvas m_canvas;
+        private Image m_erase_img;
+        private PenType type = PenType.Pen;
+        private int page = 0;
+        private int erasesize = 32;
 
-        Canvas m_canvas;
-        Image m_erase_img;
-        PenType type = PenType.Pen;
-        int page = 0;
-        int erasesize = 32;
-
-        TextBox m_textbox;
+        private TextBox m_textbox;
 
         // 只在mouse事件时生效
-        bool sketching = false;
+        private bool sketching = false;
 
         // 定义下面的变量来解决在部分电脑上touch同时也会触发mouse事件
-        bool istouch = false;
-        bool ismouse = false;
+        private bool istouch = false;
 
-        List<ZJBBPage> strokes_page_all = new List<ZJBBPage>();
+        private bool ismouse = false;
+
+        private List<ZJBBPage> strokes_page_all = new List<ZJBBPage>();
+
         public ZJBlackboard(Canvas canvas, Image image, TextBox textbox)
         {
             this.m_canvas = canvas;
@@ -68,17 +68,18 @@ namespace ZJClassTool.Utils
             }
         }
 
-        private void setCursor() {
+        private void setCursor()
+        {
             if (this.type == PenType.Pen)
             {
                 m_canvas.Cursor = Cursors.Arrow;
             }
-            else {
+            else
+            {
                 StreamResourceInfo sri = Application.GetResourceStream(new Uri(@"cur\erase.cur", UriKind.Relative));
                 m_canvas.Cursor = new Cursor(sri.Stream);
             }
         }
-
 
         private void m_mousedown(object sender, MouseEventArgs e)
         {
@@ -94,18 +95,18 @@ namespace ZJClassTool.Utils
 
                     if (!this.sketching)
                     {
-                        
                         Polyline curvePolyline = new Polyline();
                         if (this.type == PenType.Pen)
                         {
                             curvePolyline.Stroke = Brushes.White;
                             curvePolyline.StrokeThickness = 2;
                         }
-                        else {
+                        else
+                        {
                             curvePolyline.Stroke = m_canvas.Background;
                             curvePolyline.StrokeThickness = this.erasesize;
                         }
-                        
+
                         curvePolyline.StrokeLineJoin = PenLineJoin.Round;
                         var Points = new PointCollection();
                         Points.Add(e.GetPosition(this.m_canvas));
@@ -115,9 +116,7 @@ namespace ZJClassTool.Utils
                         this.sketching = true;
                     }
                 }
-
             }
-
         }
 
         private void mousemove(object sender, MouseEventArgs e)
@@ -125,8 +124,8 @@ namespace ZJClassTool.Utils
             var point = e.GetPosition(this.m_canvas);
             m_erase_img.SetValue(Canvas.LeftProperty, point.X);
             m_erase_img.SetValue(Canvas.TopProperty, point.Y);
-            if (m_erase_img != null) {
-                
+            if (m_erase_img != null)
+            {
             }
             if (!istouch)
             {
@@ -141,12 +140,11 @@ namespace ZJClassTool.Utils
                         if (strokes_page_all[this.page].polylines.Count > 0)
                         {
                             Polyline curvePolyline = strokes_page_all[this.page].polylines.Last();
-                            
+
                             curvePolyline.Points.Add(point);
                         }
                     }
                 }
-
             }
         }
 
@@ -163,7 +161,6 @@ namespace ZJClassTool.Utils
                     this.sketching = false;
                     ismouse = false;
                 }
-
             }
         }
 
@@ -221,11 +218,11 @@ namespace ZJClassTool.Utils
             istouch = false;
         }
 
-
         // public方法
 
         // 笔
-        public void change_pen() {
+        public void change_pen()
+        {
             this.type = PenType.Pen;
             setCursor();
         }

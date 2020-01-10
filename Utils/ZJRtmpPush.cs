@@ -5,29 +5,29 @@ using System.Runtime.InteropServices;
 
 namespace ZJClassTool.Utils
 {
-    class ZJRtmpPush
+    internal class ZJRtmpPush
     {
         #region 模拟控制台信号需要使用的api
 
         [DllImport("kernel32.dll")]
-        static extern bool GenerateConsoleCtrlEvent(int dwCtrlEvent, int dwProcessGroupId);
+        private static extern bool GenerateConsoleCtrlEvent(int dwCtrlEvent, int dwProcessGroupId);
 
         [DllImport("kernel32.dll")]
-        static extern bool SetConsoleCtrlHandler(IntPtr handlerRoutine, bool add);
+        private static extern bool SetConsoleCtrlHandler(IntPtr handlerRoutine, bool add);
 
         [DllImport("kernel32.dll")]
-        static extern bool AttachConsole(int dwProcessId);
+        private static extern bool AttachConsole(int dwProcessId);
 
         [DllImport("kernel32.dll")]
-        static extern bool FreeConsole();
+        private static extern bool FreeConsole();
 
-        #endregion
+        #endregion 模拟控制台信号需要使用的api
 
         // ffmpeg进程
         public static Process p = new Process();
 
         // ffmpeg.exe实体文件路径
-        static string ffmpegPath = AppDomain.CurrentDomain.BaseDirectory + "ffmpeg\\ffmpeg.exe";
+        private static string ffmpegPath = AppDomain.CurrentDomain.BaseDirectory + "ffmpeg\\ffmpeg.exe";
 
         /// <summary>
         /// 功能: 开始录制
@@ -52,7 +52,6 @@ namespace ZJClassTool.Utils
             p.Start();
         }
 
-
         /// <summary>
         /// 功能: 开始推流
         /// </summary>
@@ -65,9 +64,8 @@ namespace ZJClassTool.Utils
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             var parastr = string.Format("-f gdigrab -framerate 15 -i desktop -f dshow -i audio=\"{0}\" -filter:v scale=w=trunc(oh*a/2)*2:h=720 -vcodec libx264 -preset:v ultrafast -acodec libmp3lame -maxrate 1000k -pix_fmt yuv422p -f flv \"{1}\"", audioDevice, pushUrl);
             startInfo.Arguments = parastr;
-            Console.WriteLine(parastr);
             p.StartInfo = startInfo;
-
+            // Console.WriteLine("parastr:" + parastr);
             p.Start();
         }
 
@@ -76,10 +74,12 @@ namespace ZJClassTool.Utils
         /// </summary>
         public static void Stop()
         {
-            AttachConsole(p.Id);
-            SetConsoleCtrlHandler(IntPtr.Zero, true);
-            GenerateConsoleCtrlEvent(0, 0);
-            FreeConsole();
+            p.Kill();
+            //AttachConsole(p.Id);
+            //SetConsoleCtrlHandler(IntPtr.Zero, true);
+            //GenerateConsoleCtrlEvent(0, 0);
+            //FreeConsole();
+            p.StartInfo.Arguments = "";
         }
     }
 }

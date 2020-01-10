@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using ZJClassTool.Utils;
-
-namespace ZJClassTool.Wins
+﻿namespace ZJClassTool.Wins
 {
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using ZJClassTool.Utils;
+
     /// <summary>
-    /// ZJRtmpWin.xaml 的交互逻辑
+    /// Defines the <see cref="ZJRtmpWin"/>
     /// </summary>
     public partial class ZJRtmpWin : Window
     {
-        RtmpModel rtmpModel = new RtmpModel();
+        /// <summary>
+        /// Defines the rtmpModel
+        /// </summary>
+        internal RtmpModel rtmpModel = new RtmpModel();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ZJRtmpWin"/> class.
+        /// </summary>
         public ZJRtmpWin()
         {
             InitializeComponent();
@@ -32,43 +28,101 @@ namespace ZJClassTool.Wins
             {
                 rtmpModel.IsStart = false;
             }
+            var audiolist = ZJAudioModel.getAudioDevice();
+            for (int i = 0; i < audiolist.Count; i++)
+            {
+                var item = audiolist[i];
+                rtmpModel.MYAudioDevices.Add(item);
+            }
             DataContext = rtmpModel;
+
+            if (audiolist.Count > 0)
+            {
+                audio_list_box.SelectedIndex = 0;
+            }
         }
 
+        /// <summary>
+        /// The close_Click
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="RoutedEventArgs"/></param>
         private void close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// The start_Click
+        /// </summary>
+        /// <param name="sender">The sender<see cref="object"/></param>
+        /// <param name="e">The e<see cref="RoutedEventArgs"/></param>
         private void start_Click(object sender, RoutedEventArgs e)
         {
             if (rtmpModel.IsStart)
             {
                 ZJRtmpPush.Stop();
+
                 rtmpModel.IsStart = false;
             }
             else
             {
-                var audiolist = ZJAudioModel.getAudioDevice();
-                foreach (var item in audiolist)
+                var selectIndex = audio_list_box.SelectedIndex;
+                if (selectIndex >= 0 && selectIndex < rtmpModel.MYAudioDevices.Count)
                 {
-                    Console.WriteLine(item.name);
+                    var name = rtmpModel.MYAudioDevices[selectIndex].name;
+                    ZJRtmpPush.StartPush(name, "rtmp://live.xhkjedu.com/tt/01");
+                    rtmpModel.IsStart = true;
                 }
-                ZJRtmpPush.StartPush("Internal Microphone (Cirrus Logic CS8409 (AB 51))", "rtmp://live.xhkjedu.com/tt/01");
-                rtmpModel.IsStart = true;
+                else
+                {
+                    MessageBox.Show("没有可用的音频输入设备");
+                }
             }
+        }
 
+        private void Window_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (rtmpModel.IsStart)
+            {
+                ZJRtmpPush.Stop();
+
+                rtmpModel.IsStart = false;
+            }
         }
     }
 
-    public class RtmpModel:ZJNotifyModel
+    /// <summary>
+    /// Defines the <see cref="RtmpModel" />
+    /// </summary>
+    public class RtmpModel : ZJNotifyModel
     {
+        /// <summary>
+        /// Defines the _IsStart
+        /// </summary>
         private bool _IsStart;
+
+        /// <summary>
+        /// Gets or sets the MYAudioDevices
+        /// </summary>
+        public ObservableCollection<ZJAudioModel> MYAudioDevices { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsStart
+        /// </summary>
         public bool IsStart
         {
             get { return _IsStart; }
             set { _IsStart = value; OnPropertyChanged("IsStart"); }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RtmpModel"/> class.
+        /// </summary>
+        public RtmpModel()
+        {
+            _IsStart = false;
+            MYAudioDevices = new ObservableCollection<ZJAudioModel>();
+        }
     }
 }

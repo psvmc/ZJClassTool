@@ -1,34 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using ZJClassTool.Utils;
-using System.Collections.ObjectModel;
-using WebSocket4Net;
-
-namespace ZJClassTool.Wins
+﻿namespace ZJClassTool.Wins
 {
-    /// <summary>
-    /// MainWindow.xaml 的交互逻辑
-    /// </summary>
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Windows;
+    using System.Windows.Controls;
+    using WebSocket4Net;
+    using ZJClassTool.Utils;
+
     public partial class ToolbarWin : Window
     {
+        internal double pwidth = SystemParameters.PrimaryScreenWidth;
 
-        double pwidth = SystemParameters.PrimaryScreenWidth;
-        double pHeight = SystemParameters.PrimaryScreenHeight;
-        ToolbarLeftWin leftBar;
-        ToolbarRightWin rightBar;
-        ToolbarModel pageData = new ToolbarModel();
+        internal double pHeight = SystemParameters.PrimaryScreenHeight;
+
+        internal ToolbarLeftWin leftBar;
+
+        internal ToolbarRightWin rightBar;
+
+        internal ToolbarModel pageData = new ToolbarModel();
+
         public ToolbarWin()
         {
             InitializeComponent();
@@ -42,62 +32,55 @@ namespace ZJClassTool.Wins
             {
                 Name = "下课",
                 Pic = "../Images/ToolBar/toobar_1.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "课件",
                 Pic = "../Images/ToolBar/toobar_2.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "黑板",
                 Pic = "../Images/ToolBar/toobar_3.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "演板",
                 Pic = "../Images/ToolBar/toolbar_13.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "训练",
                 Pic = "../Images/ToolBar/toobar_4.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "抢答",
                 Pic = "../Images/ToolBar/toobar_5.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "点名",
                 Pic = "../Images/ToolBar/toobar_6.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "息屏",
                 Pic = "../Images/ToolBar/toobar_10.png"
-
             });
             pageData.menuList.Add(new ToolbarMenu()
             {
                 Name = "开始直播",
                 Pic = "../Images/ToolBar/toobar_12_1.png"
-
             });
             DataContext = pageData;
             Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
         }
+
         public void left_bar_click()
         {
             pageData.IsRight = false;
+
             this.Left = 0;
             leftBar.Hide();
             rightBar.Show();
@@ -106,7 +89,6 @@ namespace ZJClassTool.Wins
                 this.Show();
             }
         }
-
 
         public void right_bar_click()
         {
@@ -129,7 +111,6 @@ namespace ZJClassTool.Wins
             leftBar.Owner = this;
             leftBar.Show();
 
-
             rightBar = new ToolbarRightWin();
             rightBar.Topmost = true;
             rightBar.Left = pwidth - 30;
@@ -140,7 +121,7 @@ namespace ZJClassTool.Wins
         private void toolbar_item_Click(object sender, RoutedEventArgs e)
         {
             var clickindex = 0;
-            var buttons = VTHelper.FindChilds<Button>(toolbar_list, "toolbar_item");
+            var buttons = ZJVTHelper.FindChilds<Button>(toolbar_list, "toolbar_item");
             for (var i = 0; i < buttons.Count; i++)
             {
                 if (buttons[i] == sender)
@@ -180,7 +161,6 @@ namespace ZJClassTool.Wins
             {
                 if (item.Name == "熄屏")
                 {
-
                     item.Name = "恢复";
                 }
                 else
@@ -190,12 +170,10 @@ namespace ZJClassTool.Wins
             }
             else if (clickindex == 8)
             {
-
-
                 var rtmpWin = new ZJRtmpWin();
                 rtmpWin.Topmost = true;
-                rtmpWin.Width = 300;
-                rtmpWin.Height = 200;
+                rtmpWin.Width = 360;
+                rtmpWin.Height = 400;
                 rtmpWin.ShowDialog();
                 rtmpWin.Owner = this;
             }
@@ -209,13 +187,10 @@ namespace ZJClassTool.Wins
                 leftBar.Show();
                 rightBar.Show();
             }
-
         }
 
+        internal WebSocket websocket = null;
 
-        // WebSocket
-        WebSocket websocket = null;
-        //websocket连接
         private void connectWebsocket()
         {
             websocket = new WebSocket("");
@@ -224,22 +199,20 @@ namespace ZJClassTool.Wins
             websocket.MessageReceived += websocket_MessageReceived;
             websocket.Open();
         }
+
         private void websocket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             //接收服务端发来的消息
             MessageReceivedEventArgs responseMsg = (MessageReceivedEventArgs)e;
             string strMsg = responseMsg.Message;
-
         }
 
         private void websocket_Closed(object sender, EventArgs e)
         {
-
         }
 
         private void websocket_Opened(object sender, EventArgs e)
         {
-
         }
 
         private void sendmsg(string msg)
@@ -248,22 +221,21 @@ namespace ZJClassTool.Wins
             {
                 websocket.Send(msg);
             }
-
         }
-
-
     }
-
 
     public class ToolbarModel : ZJNotifyModel
     {
         public ObservableCollection<ToolbarMenu> menuList { get; set; }
-        bool _IsRight = true;
+
+        internal bool _IsRight = true;
+
         public bool IsRight
         {
             get { return _IsRight; }
             set { _IsRight = value; OnPropertyChanged("IsRight"); }
         }
+
         public ToolbarModel()
         {
             menuList = new ObservableCollection<ToolbarMenu>();
@@ -272,7 +244,8 @@ namespace ZJClassTool.Wins
 
     public class ToolbarMenu : ZJNotifyModel
     {
-        string _name;
+        internal string _name;
+
         public string Name
         {
             get { return _name; }

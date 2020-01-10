@@ -1,29 +1,43 @@
-﻿<Window xmlns:Views="clr-namespace:ZJClassTool.Views"  
-        x:Class="ZJClassTool.Wins.BlackboardWin"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        Title="Blackboard"  
-        Opacity="1" 
-        AllowsTransparency="True" 
-        ShowInTaskbar="False" 
-        Background="Transparent" 
-        WindowStyle="None">
+﻿<Window
+    x:Class="ZJClassTool.Wins.BlackboardWin"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Views="clr-namespace:ZJClassTool.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Blackboard"
+    AllowsTransparency="True"
+    Background="Transparent"
+    Opacity="1"
+    ShowInTaskbar="False"
+    WindowStyle="None"
+    mc:Ignorable="d">
     <Window.Resources>
         <DataTemplate x:Key="BMenuTemp">
-            <Button x:Name="toolbar_item" Width="60"  BorderThickness="0" Cursor="Hand" Height="60" Click="menu_item_Click">
+            <Button
+                x:Name="toolbar_item"
+                Width="60"
+                Height="60"
+                BorderThickness="0"
+                Click="menu_item_Click"
+                Cursor="Hand">
                 <Button.Content>
                     <StackPanel Width="Auto" Background="Transparent">
-                        <Image HorizontalAlignment="Center" Width="23" Source="{Binding Pic}"/>
-                        <TextBlock x:Name="menu_name" HorizontalAlignment="Center" Margin="0 2 0 0" Text="{Binding Name}">
+                        <Image
+                            Width="23"
+                            HorizontalAlignment="Center"
+                            Source="{Binding Pic}" />
+                        <TextBlock
+                            x:Name="menu_name"
+                            Margin="0,2,0,0"
+                            HorizontalAlignment="Center"
+                            Text="{Binding Name}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
-                                    <Setter Property="Foreground" Value="#3C525B"></Setter>
+                                    <Setter Property="Foreground" Value="#3C525B" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Selected}" Value="true">
-                                            <Setter Property="Foreground" Value="#ffffff"></Setter>
+                                            <Setter Property="Foreground" Value="#ffffff" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -33,12 +47,15 @@
                 </Button.Content>
                 <Button.Style>
                     <Style TargetType="Button">
-                        <Setter Property="Background" Value="Transparent"></Setter>
+                        <Setter Property="Background" Value="Transparent" />
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="Black"
+                                        BorderThickness="0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -48,7 +65,7 @@
                                 <Setter Property="Background" Value="#eee" />
                             </Trigger>
                             <DataTrigger Binding="{Binding Selected}" Value="true">
-                                <Setter Property="Background" Value="#136efb"></Setter>
+                                <Setter Property="Background" Value="#136efb" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -58,29 +75,33 @@
     </Window.Resources>
     <Grid Background="White">
 
-        <Canvas Background="#043a25" x:Name="blackboard_canvas">
-            <Image x:Name="erase_img" Visibility="Hidden" Width="64" Source="../Images/Blackboard/erase.png"></Image>
+        <Canvas x:Name="blackboard_canvas" Background="#043a25">
+            <Image
+                x:Name="erase_img"
+                Width="64"
+                Source="../Images/Blackboard/erase.png"
+                Visibility="Hidden" />
         </Canvas>
 
-        <Views:ClippingBorder 
-            VerticalAlignment="Bottom"
-            HorizontalAlignment="Center"
-            CornerRadius="4"
-            Margin="0 0 0 10"
-            Height="58"
+        <Views:ZJClippingBorder
             Width="360"
-            Background="#f3f3f3" >
-            <ItemsControl 
-                    x:Name="toolbar_list"
-                    ItemsSource="{Binding menuList}"
-                    ItemTemplate="{StaticResource BMenuTemp}"
-                     BorderThickness="0">
+            Height="58"
+            Margin="0,0,0,10"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Bottom"
+            Background="#f3f3f3"
+            CornerRadius="4">
+            <ItemsControl
+                x:Name="toolbar_list"
+                BorderThickness="0"
+                ItemTemplate="{StaticResource BMenuTemp}"
+                ItemsSource="{Binding menuList}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
+                        <StackPanel Orientation="Horizontal" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-        </Views:ClippingBorder>
+        </Views:ZJClippingBorder>
     </Grid>
 </Window>

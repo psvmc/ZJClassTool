@@ -1,15 +1,29 @@
 ﻿using NAudio.CoreAudioApi;
-using System;
 using System.Collections.Generic;
-using System.Management;
-using Newtonsoft.Json;
 
 namespace ZJClassTool.Utils
 {
-    class ZJAudioModel
+    public class ZJAudioModel : ZJNotifyModel
     {
-        public string name { get; set; }
+        private string _name;
+
+        public string name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value; OnPropertyChanged("name");
+            }
+        }
+
         public string id { get; set; }
+        private bool _selected = true;
+
+        public bool selected
+        {
+            get { return _selected; }
+            set { _selected = value; OnPropertyChanged("selected"); }
+        }
 
         public static List<ZJAudioModel> getAudioDevice()
         {
@@ -17,7 +31,7 @@ namespace ZJClassTool.Utils
             var enumerator = new NAudio.CoreAudioApi.MMDeviceEnumerator();
 
             //允许你在某些状态下枚举渲染设备
-            var endpoints = enumerator.EnumerateAudioEndPoints(DataFlow.All, DeviceState.Unplugged | DeviceState.Active);
+            var endpoints = enumerator.EnumerateAudioEndPoints(DataFlow.Capture, DeviceState.Active);
             foreach (var endpoint in endpoints)
             {
                 ZJAudioModel audioModel = new ZJAudioModel();

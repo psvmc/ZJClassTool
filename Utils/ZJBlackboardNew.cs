@@ -5,19 +5,20 @@ using System.Windows.Controls;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace ZJClassTool.Utils
 {
-    enum ZPenType : byte
+    internal enum ZPenType : byte
     {
         Pen = 1,
         Erase = 2
     };
-    class ZBBPage
+
+    internal class ZBBPage
     {
         public List<ZBBPageStep> lines { get; set; }
         public List<ZBBPageStep> lines_histoty { get; set; }
+
         public ZBBPage()
         {
             lines = new List<ZBBPageStep>();
@@ -25,7 +26,7 @@ namespace ZJClassTool.Utils
         }
     }
 
-    class ZBBPageStep
+    internal class ZBBPageStep
     {
         public StrokeCollection lines_curr { get; set; }
         public StrokeCollection lines_add { get; set; }
@@ -39,22 +40,21 @@ namespace ZJClassTool.Utils
         }
     }
 
-    public class ZBlackboard
+    public class ZJBlackboardNew
     {
+        private InkCanvas m_canvas;
+        private ZPenType type = ZPenType.Pen;
+        private int pagenum = 0;
+        private int erasesize = 64;
+        private int pensize = 3;
+        private int undoOrRedo = 0; //是否在进行撤销恢复操作
 
-        InkCanvas m_canvas;
-        ZPenType type = ZPenType.Pen;
-        int pagenum = 0;
-        int erasesize = 64;
-        int pensize = 3;
-        int undoOrRedo = 0; //是否在进行撤销恢复操作
-
-        List<ZBBPage> strokes_page_all = new List<ZBBPage>();
+        private List<ZBBPage> strokes_page_all = new List<ZBBPage>();
 
         // 添加这个变量是因为在用橡皮擦时 一次操作会触发多次StrokesChanged回掉 这里是把多次回掉合并在一起
-        ZBBPageStep step = null;
+        private ZBBPageStep step = null;
 
-        public ZBlackboard(InkCanvas canvas)
+        public ZJBlackboardNew(InkCanvas canvas)
         {
             this.m_canvas = canvas;
             var page = new ZBBPage();
@@ -76,7 +76,6 @@ namespace ZJClassTool.Utils
             }
         }
 
-
         private void Canvas_StrokeErasing(object sender, InkCanvasStrokeErasingEventArgs e)
         {
             undoOrRedo = 0;
@@ -85,7 +84,6 @@ namespace ZJClassTool.Utils
         private void Canvas_StrokeErased(object sender, RoutedEventArgs e)
         {
         }
-
 
         private void Canvas_StrokeCollected(object sender, InkCanvasStrokeCollectedEventArgs e)
         {
@@ -140,9 +138,7 @@ namespace ZJClassTool.Utils
                     }
                 }
             }
-
         }
-
 
         // public方法
         // 笔

@@ -4,6 +4,5 @@
              xmlns:local="clr-namespace:ZJClassTool"
              StartupUri="Wins/ToolbarWin.xaml">
     <Application.Resources>
-        
     </Application.Resources>
 </Application>

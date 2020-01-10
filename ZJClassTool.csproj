@@ -68,7 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Utils\ZBlackboard.cs" />
+    <Compile Include="Utils\ZJGenericTypeConverter.cs" />
+    <Compile Include="Utils\ZJBlackboardNew.cs" />
     <Compile Include="Utils\ZJAudioModel.cs" />
     <Compile Include="Utils\ZJRtmpPush.cs" />
     <Compile Include="Wins\BlackboardWin.xaml.cs">
@@ -81,10 +82,10 @@
       <DependentUpon>ToolbarRightWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ZJBlackboard.cs" />
-    <Compile Include="Views\ClippingBorder.cs" />
+    <Compile Include="Views\ZJClippingBorder.cs" />
     <Compile Include="Utils\ZJNotifyModel.cs" />
-    <Compile Include="Utils\VTHelper.cs" />
-    <Compile Include="Views\MyListBox.cs" />
+    <Compile Include="Utils\ZJVTHelper.cs" />
+    <Compile Include="Views\ZJListBox.cs" />
     <Compile Include="Wins\ZBlackboardWin.xaml.cs">
       <DependentUpon>ZBlackboardWin.xaml</DependentUpon>
     </Compile>
@@ -211,6 +212,7 @@
     <Content Include="ffmpeg\swresample-3.dll" />
     <Content Include="ffmpeg\swscale-5.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy /Y /i /e $(ProjectDir)\ffmpeg $(TargetDir)\ffmpeg</PreBuildEvent>

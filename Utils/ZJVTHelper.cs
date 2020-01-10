@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
 namespace ZJClassTool.Utils
 {
-    class VTHelper
+    internal class ZJVTHelper
     {
         public static T FindChild<T>(DependencyObject parent, string childName)
    where T : DependencyObject
@@ -28,7 +24,7 @@ namespace ZJClassTool.Utils
                     // 在下一级控件中递归查找
                     foundChild = FindChild<T>(child, childName);
 
-                    // 找到控件就可以中断递归操作 
+                    // 找到控件就可以中断递归操作
                     if (foundChild != null) break;
                 }
                 else if (!string.IsNullOrEmpty(childName))
@@ -70,10 +66,8 @@ namespace ZJClassTool.Utils
                     var findChildList = FindChilds<T>(child, childName);
                     for (int j = 0; j < findChildList.Count; j++)
                     {
-
                     }
                     list.AddRange(FindChilds<T>(child, childName));
-
                 }
                 else if (!string.IsNullOrEmpty(childName))
                 {

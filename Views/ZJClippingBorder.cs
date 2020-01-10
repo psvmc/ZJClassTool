@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows;
 
 namespace ZJClassTool.Views
 {
-    public class ClippingBorder : Border
+    public class ZJClippingBorder : Border
     {
         protected override void OnRender(DrawingContext dc)
         {
@@ -94,7 +91,10 @@ namespace ZJClassTool.Views
             }
         }
 
-        public void Update() { OnApplyChildClip(); }
+        public void Update()
+        {
+            OnApplyChildClip();
+        }
 
         private RectangleGeometry _clipRect = new RectangleGeometry();
         private object _oldClip;

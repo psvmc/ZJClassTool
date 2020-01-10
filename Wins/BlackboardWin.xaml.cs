@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ZJClassTool.Utils;
 
 namespace ZJClassTool.Wins
@@ -21,8 +10,9 @@ namespace ZJClassTool.Wins
     /// </summary>
     public partial class BlackboardWin : Window
     {
-        BPageModel pageData = new BPageModel();
-        ZJBlackboard myblackboard;
+        private BPageModel pageData = new BPageModel();
+        private ZJBlackboard myblackboard;
+
         public BlackboardWin()
         {
             InitializeComponent();
@@ -31,7 +21,7 @@ namespace ZJClassTool.Wins
             this.initData();
         }
 
-        void initData()
+        private void initData()
         {
             pageData.IsRight = true;
             pageData.menuList.Add(new BMenu()
@@ -45,28 +35,24 @@ namespace ZJClassTool.Wins
                 Name = "橡皮",
                 Pic = "../Images/Blackboard/class_3un.png",
                 Selected = false
-
             });
             pageData.menuList.Add(new BMenu()
             {
                 Name = "清空",
                 Pic = "../Images/Blackboard/class_6un.png",
                 Selected = false
-
             });
             pageData.menuList.Add(new BMenu()
             {
                 Name = "撤销",
                 Pic = "../Images/Blackboard/class_4un.png",
                 Selected = false
-
             });
             pageData.menuList.Add(new BMenu()
             {
                 Name = "恢复",
                 Pic = "../Images/Blackboard/class_5un.png",
                 Selected = false
-
             });
 
             pageData.menuList.Add(new BMenu()
@@ -74,7 +60,6 @@ namespace ZJClassTool.Wins
                 Name = "PPT",
                 Pic = "../Images/Blackboard/class_7un.png",
                 Selected = false
-
             });
 
             DataContext = pageData;
@@ -83,7 +68,7 @@ namespace ZJClassTool.Wins
         private void menu_item_Click(object sender, RoutedEventArgs e)
         {
             var clickindex = 0;
-            var buttons = VTHelper.FindChilds<Button>(toolbar_list, "toolbar_item");
+            var buttons = ZJVTHelper.FindChilds<Button>(toolbar_list, "toolbar_item");
             for (var i = 0; i < buttons.Count; i++)
             {
                 if (buttons[i] == sender)
@@ -134,12 +119,14 @@ namespace ZJClassTool.Wins
     public class BPageModel : ZJNotifyModel
     {
         public ObservableCollection<BMenu> menuList { get; set; }
-        bool _IsRight = true;
+        private bool _IsRight = true;
+
         public bool IsRight
         {
             get { return _IsRight; }
             set { _IsRight = value; OnPropertyChanged("IsRight"); }
         }
+
         public BPageModel()
         {
             menuList = new ObservableCollection<BMenu>();
@@ -148,21 +135,24 @@ namespace ZJClassTool.Wins
 
     public class BMenu : ZJNotifyModel
     {
-        string _name;
+        private string _name;
+
         public string Name
         {
             get { return _name; }
             set { _name = value; OnPropertyChanged("Name"); }
         }
 
-        string _Pic;
+        private string _Pic;
+
         public string Pic
         {
             get { return _Pic; }
             set { _Pic = value; OnPropertyChanged("Pic"); }
         }
 
-        bool _Selected;
+        private bool _Selected;
+
         public bool Selected
         {
             get { return _Selected; }
