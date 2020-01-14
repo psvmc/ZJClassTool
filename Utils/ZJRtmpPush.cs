@@ -1,28 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace ZJClassTool.Utils
 {
     internal class ZJRtmpPush
     {
-        #region 模拟控制台信号需要使用的api
-
-        [DllImport("kernel32.dll")]
-        private static extern bool GenerateConsoleCtrlEvent(int dwCtrlEvent, int dwProcessGroupId);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool SetConsoleCtrlHandler(IntPtr handlerRoutine, bool add);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool AttachConsole(int dwProcessId);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool FreeConsole();
-
-        #endregion 模拟控制台信号需要使用的api
-
         // ffmpeg进程
         public static Process p = new Process();
 
@@ -75,10 +58,6 @@ namespace ZJClassTool.Utils
         public static void Stop()
         {
             p.Kill();
-            //AttachConsole(p.Id);
-            //SetConsoleCtrlHandler(IntPtr.Zero, true);
-            //GenerateConsoleCtrlEvent(0, 0);
-            //FreeConsole();
             p.StartInfo.Arguments = "";
         }
     }

@@ -19,6 +19,9 @@
 
         internal ToolbarModel pageData = new ToolbarModel();
 
+        private BlackboardWin blackboardWin = null;
+        private ZBlackboardWin blackboardWin2 = null;
+
         public ToolbarWin()
         {
             InitializeComponent();
@@ -137,25 +140,32 @@
             }
             else if (clickindex == 2)
             {
-                var blockboard = new BlackboardWin();
-                blockboard.Topmost = true;
-                blockboard.Width = pwidth;
-                blockboard.Height = pHeight;
-                blockboard.Left = 0;
-                blockboard.Top = 0;
-                blockboard.ShowDialog();
-                blockboard.Owner = this;
+                if (blackboardWin == null)
+                {
+                    blackboardWin = new BlackboardWin();
+                    blackboardWin.Topmost = true;
+                    blackboardWin.Width = pwidth;
+                    blackboardWin.Height = pHeight;
+                    blackboardWin.Left = 0;
+                    blackboardWin.Top = 0;
+                    blackboardWin.Owner = this;
+                }
+
+                blackboardWin.ShowDialog();
             }
             else if (clickindex == 3)
             {
-                var blockboard = new ZBlackboardWin();
-                blockboard.Topmost = true;
-                blockboard.Width = pwidth;
-                blockboard.Height = pHeight;
-                blockboard.Left = 0;
-                blockboard.Top = 0;
-                blockboard.ShowDialog();
-                blockboard.Owner = this;
+                if (blackboardWin2 == null)
+                {
+                    blackboardWin2 = new ZBlackboardWin();
+                    blackboardWin2.Topmost = true;
+                    blackboardWin2.Width = pwidth;
+                    blackboardWin2.Height = pHeight;
+                    blackboardWin2.Left = 0;
+                    blackboardWin2.Top = 0;
+                    blackboardWin2.Owner = this;
+                }
+                blackboardWin2.ShowDialog();
             }
             else if (clickindex == 7)
             {

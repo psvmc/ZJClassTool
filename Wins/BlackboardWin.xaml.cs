@@ -110,7 +110,7 @@ namespace ZJClassTool.Wins
                 }
                 else if (clickindex == 5)
                 {
-                    this.Close();
+                    this.Hide();
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -159,16 +160,8 @@ namespace ZJClassTool.Utils
         public void change_erase()
         {
             this.type = ZPenType.Erase;
-
-            DrawingAttributes drawingAttributes = new DrawingAttributes();
-            m_canvas.DefaultDrawingAttributes = drawingAttributes;
-            drawingAttributes.Color = Colors.White;
-            drawingAttributes.Width = this.erasesize;
-            drawingAttributes.Height = this.erasesize;
-            drawingAttributes.FitToCurve = true;
-            drawingAttributes.IgnorePressure = false;
-
             m_canvas.EditingMode = InkCanvasEditingMode.EraseByPoint;
+            m_canvas.EraserShape = new EllipseStylusShape(this.erasesize, this.erasesize,0);
         }
 
         // 撤销
@@ -228,6 +221,40 @@ namespace ZJClassTool.Utils
                 page.lines_histoty.Clear();
                 page.lines.Clear();
                 page.lines.Add(new ZBBPageStep());
+            }
+        }
+
+        public void changepage(int mpagenum)
+        {
+            if (this.pagenum != mpagenum)
+            {
+                this.pagenum = mpagenum;
+                if (this.pagenum >= this.strokes_page_all.Count)
+                {
+                    var numadd = this.pagenum - this.strokes_page_all.Count + 1;
+                    for (int i = 0; i < numadd; i++)
+                    {
+                        var pagetemp = new ZBBPage();
+                        pagetemp.lines.Add(new ZBBPageStep());
+                        strokes_page_all.Add(pagetemp);
+                    }
+                }
+
+                var page = strokes_page_all[this.pagenum];
+                if (page != null)
+                {
+                    if (page.lines.Last().lines_curr.Count > 0)
+                    {
+                        undoOrRedo += 1;
+                    }
+                    if (m_canvas.Strokes.Count > 0)
+                    {
+                        undoOrRedo += 1;
+                        m_canvas.Strokes.Clear();
+                    }
+
+                    m_canvas.Strokes.Add(page.lines.Last().lines_curr);
+                }
             }
         }
     }
