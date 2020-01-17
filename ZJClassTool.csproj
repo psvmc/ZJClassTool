@@ -45,6 +45,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -72,8 +73,12 @@
     <Compile Include="Utils\ZJBlackboardNew.cs" />
     <Compile Include="Utils\ZJAudioModel.cs" />
     <Compile Include="Utils\ZJRtmpPush.cs" />
+    <Compile Include="Views\ZJMaskCanvas.cs" />
     <Compile Include="Wins\BlackboardWin.xaml.cs">
       <DependentUpon>BlackboardWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Wins\PracticeWin.xaml.cs">
+      <DependentUpon>PracticeWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wins\ToolbarLeftWin.xaml.cs">
       <DependentUpon>ToolbarLeftWin.xaml</DependentUpon>
@@ -93,6 +98,10 @@
       <DependentUpon>ZJRtmpWin.xaml</DependentUpon>
     </Compile>
     <Page Include="Wins\BlackboardWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Wins\PracticeWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -211,8 +220,17 @@
     <Content Include="ffmpeg\postproc-55.dll" />
     <Content Include="ffmpeg\swresample-3.dll" />
     <Content Include="ffmpeg\swscale-5.dll" />
+    <Content Include="Lib\PrScrn.dll" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="UICommon\UICommon.csproj">
+      <Project>{fc3fac70-a4bb-45ef-b7ca-4a74368e5d81}</Project>
+      <Name>UICommon</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>xcopy /Y /i /e $(ProjectDir)\ffmpeg $(TargetDir)\ffmpeg</PreBuildEvent>

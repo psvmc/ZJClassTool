@@ -167,6 +167,19 @@
                 }
                 blackboardWin2.ShowDialog();
             }
+            else if (clickindex == 4)
+            {
+                this.Hide();
+                PracticeWin practiceWin = new PracticeWin();
+                practiceWin.Topmost = true;
+                practiceWin.Width = pwidth;
+                practiceWin.Height = pHeight;
+                practiceWin.Left = 0;
+                practiceWin.Top = 0;
+                practiceWin.Owner = this;
+                practiceWin.ShowDialog();
+                practiceWin.Unloaded += PracticeWin_Unloaded;
+            }
             else if (clickindex == 7)
             {
                 if (item.Name == "熄屏")
@@ -187,6 +200,11 @@
                 rtmpWin.ShowDialog();
                 rtmpWin.Owner = this;
             }
+        }
+
+        private void PracticeWin_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.Show();
         }
 
         private void top_button_Click(object sender, RoutedEventArgs e)
